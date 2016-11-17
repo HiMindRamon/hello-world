@@ -2,21 +2,17 @@
 $(document).ready(function(){
   var ref =new Wilddog("https://hjm0003.wilddogio.com/");
   var arr = [];
-  
-  //save the data to Wilddog
-  $("s_sub").click(function(){
+  $(".s_sub").click(function(){
     var text=$(".s_txt").val();
     ref.child('message').push(text);
     $(".s_txt").val('');
   });
-  //响应发射按钮
-  $("s_txt").keypress(function(event){
+  $(".s_txt").keypress(function(event){
     if(event.keyCode=="13"){
       $(".s_sub").trigger('click');
     }
   });
-  //响应按键清除
-  $("s_del").click(function(){
+  $(".s_del").click(function(){
     ref.remove();
     arr=[];
     $(".dm_show").empty();
@@ -29,16 +25,13 @@ $(document).ready(function(){
     $(".dm_show").append(textObj);
     moveObj(textObj);
   });
-  
-  ref.on('chlid_remove',function(){
+  ref.on('chlid_removed',function(){
     arr= [];
     $('.dm_show').empty();
   });
-  //
-  var topMin =$('dm_mask').offset().top;
+  var topMin =$('.dm_mask').offset().top;
   var topMax =topMin+$('.dm_mask').height();
   var _top =topMin;
-  
   var moveObj =function(obj){
     var _left =$('.dm_mask').width()-obj.width();
     _top=_top+50;
@@ -54,7 +47,7 @@ $(document).ready(function(){
     obj.animate({
       left:"-"+_left+"px"
     },time,function(){
-obj.remove();
+      obj.remove();
     });
 }
   var getRandomColor =function(){
@@ -62,7 +55,6 @@ obj.remove();
       return new Array(7-h.length).join("0")+h
     })((Math.random()*0x1000000<<0).toString(16))
   }
-  
   var getAndRun = function(){
     if(arr.length>0){
       var n = Math.floor(Math.random()*arr.length+1)-1;
@@ -70,8 +62,8 @@ obj.remove();
       $(".dm_show").append(textObj);
       moveObj(textObj);
     }
-    srtTimeout(getAndRun,3000);
+    setTimeout(getAndRun,3000);
   }
   JQuery.fx.interval=50;
   getAndRun();
-})
+});
